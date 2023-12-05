@@ -1,30 +1,25 @@
-from beanie import Document
-from pydantic import BaseModel
 from typing import Optional
 from uuid import UUID, uuid4
+from itertools import count
+
+from beanie import Document
+from pydantic import Field
 from pymongo import IndexModel
 
-class ChallengeBase(BaseModel):
-    title: str
-    region: str
-    layer: str
-    description: str
-    connect: str
-    flag: str
+def sequential_uuid():
+    for i in count(start=1):
+        yield UUID(int=i)
 
-class ChallengeCreate(ChallengeBase):
-    pass
+class Challenge(Document):
+    uuid: UUID = Field(default_factory=sequential_uuid, alias="_id")
+    title: str = Field(default="TITLE")
+    region: str = Field(default="REGION")
+    layer: str = Field(default="LAYER")
+    description: str = Field(default="DESCRIPTION")
+    connect: Optional[str] = Field(default="CONNECT")
+    flag: str = Field(default="FLAG")
 
-class ChallengeUpdate(ChallengeBase):
-    pass
-
-class ChallengeInDB(ChallengeBase):
-    id: str
-
-class Challenge(Document, ChallengeInDB):
     class Settings:
-        collection = "challenges"
-
         indexes = [
-            IndexModel("id", unique=True),
+            IndexModel("uuid", unique=True),
         ]
