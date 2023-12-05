@@ -1,5 +1,5 @@
 from typing import Optional
-from uuid import UUID, uuid4
+from uuid import UUID
 from itertools import count
 
 from beanie import Document
@@ -11,7 +11,7 @@ def sequential_uuid():
         yield UUID(int=i)
 
 class Challenge(Document):
-    uuid: UUID = Field(default_factory=sequential_uuid, alias="_id")
+    uuid: UUID = Field(default_factory=sequential_uuid)
     title: str = Field(default="TITLE")
     region: str = Field(default="REGION")
     layer: str = Field(default="LAYER")
