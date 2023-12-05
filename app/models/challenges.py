@@ -19,6 +19,7 @@ class Challenge(Document):
     connect: Optional[str] = Field(default="CONNECT")
     flag: str = Field(default="FLAG")
 
+
     class Settings:
         indexes = [
             IndexModel("uuid", unique=True),
