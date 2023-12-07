@@ -8,8 +8,8 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from .auth.auth import get_hashed_password
 from .config.config import settings
 from .models.users import User
+from .models.challenges import Challenge
 from .routers.api import api_router
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -20,7 +20,7 @@ async def lifespan(app: FastAPI):
         username=settings.MONGO_USER,
         password=settings.MONGO_PASSWORD,
     )
-    await init_beanie(database=app.client[settings.MONGO_DB], document_models=[User])
+    await init_beanie(database=app.client[settings.MONGO_DB], document_models=[User, Challenge])
 
     user = await User.find_one({"email": settings.FIRST_SUPERUSER})
     if not user:
@@ -30,6 +30,55 @@ async def lifespan(app: FastAPI):
             is_superuser=True,
         )
         await user.create()
+
+    # create dummy challenges
+    challenge = await Challenge.find_one({"title": "TITLE1"})
+    if not challenge:
+        challenge = Challenge(
+            title="TITLE1",
+            region="REGION1",
+            layer="LAYER1",
+            description="DESCRIPTION1",
+            connect="CONNECT1",
+            flag="FLAG1",
+        )
+        await challenge.create()
+
+    challenge = await Challenge.find_one({"title": "TITLE2"})
+    if not challenge:
+        challenge = Challenge(
+            title="TITLE2",
+            region="REGION2",
+            layer="LAYER2",
+            description="DESCRIPTION2",
+            connect="CONNECT2",
+            flag="FLAG2",
+        )
+        await challenge.create()
+
+    challenge = await Challenge.find_one({"title": "TITLE3"})
+    if not challenge:
+        challenge = Challenge(
+            title="TITLE3",
+            region="REGION3",
+            layer="LAYER3",
+            description="DESCRIPTION3",
+            connect="CONNECT3",
+            flag="FLAG3",
+        )
+        await challenge.create()
+
+    challenge = await Challenge.find_one({"title": "TITLE4"})
+    if not challenge:
+        challenge = Challenge(
+            title="TITLE4",
+            region="REGION4",
+            layer="LAYER4",
+            description="DESCRIPTION4",
+            connect="CONNECT4",
+            flag="FLAG4",
+        )
+        await challenge.create()
 
     # yield app
     yield
