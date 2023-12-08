@@ -2,6 +2,7 @@
 
 from fastapi import APIRouter
 from app.models.challenges import Challenge
+from app.schemas.challenges import ChallengeBase
 
 router = APIRouter()
 
@@ -9,7 +10,7 @@ router = APIRouter()
 async def root_challenge():
     return {"message": "Welcome to challenge home !"}
 
-@router.get("/get-challenges")
+@router.get("/get-challenges", response_model=ChallengeBase)
 async def get_all_challenges():
     challenges = await Challenge.all().to_list()
     return {"challenges": challenges}
