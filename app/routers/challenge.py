@@ -11,10 +11,12 @@ router = APIRouter()
 async def root_challenge():
     return {"message": "Welcome to challenge home !"}
 
+
 @router.get("/get-all-challenges", response_model=ChallengeBase)
 async def get_all_challenges():
     challenges = await Challenge.all().to_list()
     return {"challenges": challenges}
+
 
 @router.get("/get-challenes", response_model=ChallengeBase)
 async def get_challenges(current_user: User = Depends(get_current_user)):
@@ -30,6 +32,7 @@ async def get_challenges(current_user: User = Depends(get_current_user)):
         for challenge in challenges
     ]
     return challenges_with_solved_status
+
 
 @router.post("/check-flag")
 async def check_flag(
