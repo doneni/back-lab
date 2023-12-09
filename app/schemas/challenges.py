@@ -8,11 +8,12 @@ class ChallengeBase(BaseModel):
     Shared Challenge properties. Visible by anyone.
     """
 
-    title: str = Field(default="TITLE")
-    region: str = Field(default="REGION")
-    layer: str = Field(default="LAYER")
-    description: str = Field(default="DESCRIPTION")
-    connect: Optional[str] = Field(default="CONNECT")
+    title: str = Field(default_factory=lambda: "TITLE")
+    region: str = Field(default_factory=lambda: "REGION")
+    layer: str = Field(default_factory=lambda: "LAYER")
+    description: str = Field(default_factory=lambda: "DESCRIPTION")
+    connect: Optional[str] = Field(default_factory=lambda: "CONNECT")
+
 
 class PrivateChallengeBase(ChallengeBase):
     """
