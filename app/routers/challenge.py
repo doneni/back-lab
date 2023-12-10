@@ -1,8 +1,9 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from app.models.challenges import Challenge
-from app.schemas.challenges import ChallengeBase
+from app.schemas.challenges import ChallengeBase, ChallengeCheckFlag
 from app.models.users import User
+from app.schemas.users import UserSolve
 from app.auth.auth import get_current_user
 
 router = APIRouter()
@@ -51,16 +52,38 @@ async def get_challenges(
     return challenge
 
 
-@router.post("/check-flag")
+@router.post("/check-flag" )
 async def check_flag(
-        title: str,
-        user_flag: str,
+        check_flag_request: ChallengeCheckFlag,
         current_user: User = Depends(get_current_user),
 ):
+    title = check_flag_request.title
+    user_flag = check_flag_request.user_flag
+
     challenge = await Challenge.find_one({"title": title, "flag": user_flag})
     if challenge:
-        current_user.solved.append(str(challenge.uuid))
-        await current_user.save()
-        return {"message": "correct flag"}
+        if str(challenge.title) not in current_user.solved:
+            current_user.solved.append(str(challenge.title))
+            await current_user.save()
+
+        return {"correct": bool(1)}
     else:
-        return {"message": "incorrect flag"}
+        return {"correct": bool(0)}
+
+# @router.post("/check-flag", response_model=UserSolve)
+# async def check_flag(
+#         check_flag_request: ChallengeCheckFlag,
+#         current_user: User = Depends(get_current_user),
+# ):
+#     title = check_flag_request.title
+#     user_flag = check_flag_request.user_flag
+
+#     challenge = await Challenge.find_one({"title": title, "flag": user_flag})
+#     if challenge:
+#         if str(challenge.title) not in current_user.solved:
+#             current_user.solved.append(str(challenge.title))
+#             await current_user.save()
+
+#         return current_user
+#     else:
+#         return current_user

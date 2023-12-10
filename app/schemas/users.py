@@ -36,6 +36,12 @@ class UserUpdate(UserBase):
     is_superuser: bool = False
 
 
+class UserSolve(UserBase):
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    solved: List[str] = Field(default_factory=list)
+
 class User(PrivateUserBase):
     """
     User properties returned by API. Contains private
