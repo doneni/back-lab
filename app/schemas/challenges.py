@@ -27,17 +27,17 @@ class ChallengeCreate(ChallengeBase):
     """
     pass
 
-class ChallengeFetch(ChallengeBase):
-    """
-    Challenge properties to fetch @ front.
-    """
+# class ChallengeFetch(ChallengeBase):
+#     """
+#     Challenge properties to fetch @ front.
+#     """
 
-    title: str = Field(default_factory=lambda: "TITLE")
-    region: str = Field(default_factory=lambda: "REGION")
-    layer: str = Field(default_factory=lambda: "LAYER")
-    description: str = Field(default_factory=lambda: "DESCRIPTION")
-    connect: Optional[str] = Field(default_factory=lambda: "CONNECT")
-    solved: List[str] = Field(default_factory=lambda: [])
+#     title: str = Field(default_factory=lambda: "TITLE")
+#     region: str = Field(default_factory=lambda: "REGION")
+#     layer: str = Field(default_factory=lambda: "LAYER")
+#     description: str = Field(default_factory=lambda: "DESCRIPTION")
+#     connect: Optional[str] = Field(default_factory=lambda: "CONNECT")
+#     solved: List[str] = Field(default_factory=lambda: [])
 
 class Challenge(ChallengeBase):
     """
