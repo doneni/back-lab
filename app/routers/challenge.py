@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from app.models.challenges import Challenge
-from app.schemas.challenges import ChallengeBase
+from app.schemas.challenges import ChallengeBase, ChallengeFetch
 from app.models.users import User
 from app.auth.auth import get_current_user
 
@@ -25,20 +25,23 @@ async def get_all_challenges():
     return {"challenges": challenges_base}
 
 
-# @router.get("/get-challenges", response_model=ChallengeBase)
-# async def get_challenges(current_user: User = Depends(get_current_user)):
-#     challenges = await Challenge.all().to_list()
-#     solved_challenge_uuids = set(current_user.solved)
-#     challenges_with_solved_status = [
-#         {
-#             "uuid": str(challenge.uuid),
-#             "title": challenge.title,
-#             "flag": challenge.flag,
-#             "solved": str(challenge.uuid) in solved_challenge_uuids,
-#         }
-#         for challenge in challenges
-#     ]
-#     return challenges_with_solved_status
+@router.get("/get-challenge")
+async def get_challenges(
+        layer: str,
+        region: str,
+        current_user: User = Depends(get_current_user),
+):
+    challenge = await Challenge.find_one({"layer": layer, "region": region}) # change here for scalability!
+    solved_challenge_titles = set(current_user.solved)
+    challenge = {
+            "title": challenge.title,
+            "region": challenge.region,
+            "layer": challenge.layer,
+            "description": challenge.description,
+            "connect": challenge.connect,
+            "solved": str(challenge.title) in solved_challenge_titles,
+        }
+    return challenge
 
 
 @router.post("/check-flag")
