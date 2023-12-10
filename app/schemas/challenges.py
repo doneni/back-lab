@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from beanie import PydanticObjectId
 from pydantic import BaseModel, Field
 from uuid import UUID
@@ -26,6 +26,22 @@ class ChallengeCreate(ChallengeBase):
     Challenge properties to create via API on update.
     """
     pass
+
+class ChallengeFetch(ChallengeBase):
+    """
+    Challenge properties to fetch @ front.
+    """
+
+    title: str = Field(default_factory=lambda: "TITLE")
+    region: str = Field(default_factory=lambda: "REGION")
+    layer: str = Field(default_factory=lambda: "LAYER")
+    description: str = Field(default_factory=lambda: "DESCRIPTION")
+    connect: Optional[str] = Field(default_factory=lambda: "CONNECT")
+    solved: List[str] = Field(default_factory=lambda: [])
+
+class ChallengeCheckFlag(BaseModel):
+    title: str
+    user_flag: str
 
 class Challenge(ChallengeBase):
     """

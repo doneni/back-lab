@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 from beanie import PydanticObjectId
 from pydantic import BaseModel, EmailStr, Field
 from uuid import UUID
@@ -23,7 +23,7 @@ class PrivateUserBase(UserBase):
     is_active: Optional[bool] = True
     is_superuser: bool = False
     provider: Optional[str] = None
-
+    solved: List[str] = Field(default_factory=list)
 
 class UserUpdate(UserBase):
     """
@@ -36,6 +36,12 @@ class UserUpdate(UserBase):
     is_superuser: bool = False
 
 
+class UserSolve(UserBase):
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    solved: List[str] = Field(default_factory=list)
+
 class User(PrivateUserBase):
     """
     User properties returned by API. Contains private
@@ -46,3 +52,4 @@ class User(PrivateUserBase):
 
     id: PydanticObjectId = Field()
     uuid: UUID
+    solved: List[str] = Field(default_factory=list)
