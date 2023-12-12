@@ -22,9 +22,7 @@ async def get_ending(
     for ending in endings:
         ending_condition_set = set(ending.condition)
         if user_solved_set == ending_condition_set:
-            return {"ending": EndingBase(
-                title=ending.title,
-                description=ending.description
-            )}
+            return ending
 
+    # If no matching ending is found
     raise HTTPException(status_code=404, detail="Ending not found for the given conditions")

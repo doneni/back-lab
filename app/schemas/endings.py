@@ -9,8 +9,7 @@ class EndingBase(BaseModel):
     index: int = Field(default=0)
     title: str = Field(default="TITLE")
     description: str = Field(default="DESCRIPTION")
-    image: Optional[str] = Field(default="IMAGE")
-
+    image: str = Field(default="IMAGE")
 
 class Ending(EndingBase):
     """
