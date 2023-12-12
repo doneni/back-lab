@@ -26,6 +26,24 @@ async def get_all_challenges():
     return {"challenges": challenges_base}
 
 
+@router.get("/get-solved-challenges", response_model=dict)
+async def get_solved_challenges(
+    current_user: User = Depends(get_current_user)
+):
+    solved_challenge_titles = current_user.solved
+    challenges = await Challenge.find({"title": {"$in": solved_challenge_titles}}).to_list()
+    
+    challenges_base = [ChallengeBase(
+        title=challenge.title,
+        region=challenge.region,
+        layer=challenge.layer,
+        description=challenge.description,
+        connect=challenge.connect
+    ) for challenge in challenges]
+    
+    return {"challenges": challenges_base}
+
+
 @router.get("/get-challenge")
 async def get_challenges(
         layer: str,
