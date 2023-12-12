@@ -87,21 +87,3 @@ async def check_flag(
         return {"correct": bool(1)}
     else:
         return {"correct": bool(0)}
-
-# @router.post("/check-flag", response_model=UserSolve)
-# async def check_flag(
-#         check_flag_request: ChallengeCheckFlag,
-#         current_user: User = Depends(get_current_user),
-# ):
-#     title = check_flag_request.title
-#     user_flag = check_flag_request.user_flag
-
-#     challenge = await Challenge.find_one({"title": title, "flag": user_flag})
-#     if challenge:
-#         if str(challenge.title) not in current_user.solved:
-#             current_user.solved.append(str(challenge.title))
-#             await current_user.save()
-
-#         return current_user
-#     else:
-#         return current_user

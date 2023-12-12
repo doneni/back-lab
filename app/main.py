@@ -9,6 +9,7 @@ from .auth.auth import get_hashed_password
 from .config.config import settings
 from .models.users import User
 from .models.challenges import Challenge
+from .models.endings import Ending
 from .routers.api import api_router
 
 @asynccontextmanager
@@ -20,7 +21,7 @@ async def lifespan(app: FastAPI):
         username=settings.MONGO_USER,
         password=settings.MONGO_PASSWORD,
     )
-    await init_beanie(database=app.client[settings.MONGO_DB], document_models=[User, Challenge])
+    await init_beanie(database=app.client[settings.MONGO_DB], document_models=[User, Challenge, Ending])
 
     user = await User.find_one({"email": settings.FIRST_SUPERUSER})
     if not user:
@@ -79,6 +80,39 @@ async def lifespan(app: FastAPI):
             flag="FLAG4",
         )
         await challenge.create()
+
+    ending = await Ending.find_one({"index": 0})
+    if not ending:
+        ending = Ending(
+            index=0,
+            title="TITLE0",
+            description="DESCRIPTION0",
+            image="IMAGE0",
+            condition=["TITLE0"]
+        )
+        await ending.create()
+
+    ending = await Ending.find_one({"index": 1})
+    if not ending:
+        ending = Ending(
+            index=1,
+            title="TITLE1",
+            description="DESCRIPTION1",
+            image="IMAGE1",
+            condition=["TITLE1"]
+        )
+        await ending.create()
+
+    ending = await Ending.find_one({"index": 12})
+    if not ending:
+        ending = Ending(
+            index=12,
+            title="TITLE12",
+            description="DESCRIPTION12",
+            image="IMAGE12",
+            condition=["TITLE1", "TITLE2"]
+        )
+        await ending.create()
 
     # yield app
     yield
