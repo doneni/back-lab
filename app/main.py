@@ -12,6 +12,7 @@ from .config.config import settings
 from .models.users import User
 from .models.challenges import Challenge
 from .models.endings import Ending
+from .models.records import Record
 from .routers.api import api_router
 
 @asynccontextmanager
@@ -23,7 +24,7 @@ async def lifespan(app: FastAPI):
         username=settings.MONGO_USER,
         password=settings.MONGO_PASSWORD,
     )
-    await init_beanie(database=app.client[settings.MONGO_DB], document_models=[User, Challenge, Ending])
+    await init_beanie(database=app.client[settings.MONGO_DB], document_models=[User, Challenge, Ending, Record])
 
     user = await User.find_one({"email": settings.FIRST_SUPERUSER})
     if not user:
