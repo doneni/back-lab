@@ -1,3 +1,5 @@
+import json
+
 from contextlib import asynccontextmanager
 
 from beanie import init_beanie
@@ -31,100 +33,6 @@ async def lifespan(app: FastAPI):
             is_superuser=True,
         )
         await user.create()
-
-    # # create dummy challenges
-    # challenge = await Challenge.find_one({"title": "TITLE1"})
-    # if not challenge:
-    #     challenge = Challenge(
-    #         title="TITLE1",
-    #         region="REGION1",
-    #         layer="LAYER1",
-    #         description="DESCRIPTION1",
-    #         connect="CONNECT1",
-    #         flag="FLAG1",
-    #     )
-    #     await challenge.create()
-
-    # challenge = await Challenge.find_one({"title": "TITLE2"})
-    # if not challenge:
-    #     challenge = Challenge(
-    #         title="TITLE2",
-    #         region="REGION2",
-    #         layer="LAYER2",
-    #         description="DESCRIPTION2",
-    #         connect="CONNECT2",
-    #         flag="FLAG2",
-    #     )
-    #     await challenge.create()
-
-    # challenge = await Challenge.find_one({"title": "TITLE3"})
-    # if not challenge:
-    #     challenge = Challenge(
-    #         title="TITLE3",
-    #         region="REGION3",
-    #         layer="LAYER3",
-    #         description="DESCRIPTION3",
-    #         connect="CONNECT3",
-    #         flag="FLAG3",
-    #     )
-    #     await challenge.create()
-
-    # challenge = await Challenge.find_one({"title": "TITLE4"})
-    # if not challenge:
-    #     challenge = Challenge(
-    #         title="TITLE4",
-    #         region="REGION4",
-    #         layer="LAYER4",
-    #         description="DESCRIPTION4",
-    #         connect="CONNECT4",
-    #         flag="FLAG4",
-    #     )
-    #     await challenge.create()
-
-    # ending = await Ending.find_one({"index": 24})
-    # if not ending:
-    #     ending = Ending(
-    #         index=0,
-    #         title="TITLE0",
-    #         description="DESCRIPTION0",
-    #         image="IMAGE0",
-    #         condition=["TITLE0"]
-    #     )
-    #     await ending.create()
-
-    # ending = await Ending.find_one({"index": 34})
-    # if not ending:
-    #     ending = Ending(
-    #         index=1,
-    #         title="TITLE1",
-    #         description="DESCRIPTION1",
-    #         image="IMAGE1",
-    #         condition=["TITLE1"]
-    #     )
-    #     await ending.create()
-
-    # ending = await Ending.find_one({"index": 1234})
-    # if not ending:
-    #     ending = Ending(
-    #         index=12,
-    #         title="TITLE12",
-    #         description="DESCRIPTION12",
-    #         image="IMAGE12",
-    #         condition=["TITLE1", "TITLE2"]
-    #     )
-    #     await ending.create()
-
-    # ending = await Ending.find_one({"index": 234})
-    # if not ending:
-    #     ending = Ending(
-    #         index=12,
-    #         title="TITLE12",
-    #         description="DESCRIPTION12",
-    #         image="IMAGE12",
-    #         condition=["TITLE1", "TITLE2"]
-    #     )
-    #     await ending.create()
-
 
     # yield app
     yield
