@@ -24,5 +24,4 @@ async def get_ending(
         if user_solved_set == ending_condition_set:
             return ending
 
-    # If no matching ending is found
     raise HTTPException(status_code=404, detail="Ending not found for the given conditions")

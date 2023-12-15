@@ -42,6 +42,7 @@ class UserSolve(UserBase):
     email: Optional[EmailStr] = None
     solved: List[str] = Field(default_factory=list)
 
+
 class User(PrivateUserBase):
     """
     User properties returned by API. Contains private
