@@ -11,7 +11,7 @@ class RecordBase(BaseModel):
     nickname: Optional[str] = "NICKNAME"
     content: Optional[str] = "CONTENT"
     solved: List[str] = Field(default_factory=list)
-    date: Optional[datetime] = datetime.strptime("0000-00-00 00:00", "%Y-%m-%d %H:%M")
+    date: Optional[datetime] = datetime.strptime("2000-01-01 00:00", "%Y-%m-%d %H:%M")
 
 class Record(RecordBase):
     """
